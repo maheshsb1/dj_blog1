@@ -143,5 +143,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = '' # Your Gmail Email ID used for creating superuser
-EMAIL_HOST_PASSWORD ='' # Your Gmail Email Password
+EMAIL_HOST_USER = 'maheshbahadure11@gmail.com' # Your Gmail Email ID used for creating superuser
+EMAIL_HOST_PASSWORD ='Mahesh$10' # Your Gmail Email Password
