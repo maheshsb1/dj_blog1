@@ -1,0 +1,340 @@
+https://www.heroku.com/
+
+
+Git Bash Download -
+https://git-scm.com/downloads
+
+
+Heroku CLI Download -
+https://devcenter.heroku.com/articles/heroku-cli#download-and-install
+
+
+Amazon S3 Bucket Image Storing -
+ 
+https://www.channelape.com/uncategorized/host-images-amazon-s3-cheap-5-minutes/
+
+
+Python gitignore file link -
+
+https://github.com/github/gitignore/blob/master/Python.gitignore
+
+
+
+After Installing Heroku CLI -> Go to cmd and simply type heroku
+
+After this it shows list of commands -
+
+Now first think we need to do is login to heroku via command line -
+
+Use below command for heroku login -
+
+heroku login
+
+It will show message press any key to open login into browser
+
+It will open browser to do heroku login
+
+Do login with your account
+
+Once you are authenticated you can continiue with your deployment work.
+
+Now there are few more things that
+we need to do before deploying our application 
+
+
+Now on command prompt set path of your project
+
+Step - 1] Create requirments.txt file for your project
+
+requirments.txt file holds all the dependancies on our application is 
+
+dependant and this file hepls heroku to install all those dependancies
+
+Before creating requirements.txt file let's install 
+one more package -
+
+gunicorn
+
+Use command -
+
+pip install gunicorn
+
+Now we can create our projects requirements.txt file
+
+To see list of requirements use command -
+pip freeze
+
+To create requirements.txt use command -
+pip freeze > requirements.txt
+             requirements
+
+Now Let's see how to use git for our application
+
+First you need to initialize empty git repository
+
+Go to your project folder -
+
+To initialize empty git repository use following command -
+
+git init
+
+
+Now we need to tell git what files it should track
+
+Python gitignore file link -
+
+https://github.com/github/gitignore/blob/master/Python.gitignore
+
+
+If you go to Python.gitingnore file and go to django stuff section of it it ingnores
+sqlite files also but in our application we have used sqlite as our database and 
+that is fine as we are not going touse sqllite database as our production database.
+
+
+In Production we are going to set up Postgress Database and Heroku also recommends it.
+
+
+Now Click on Raw link of above gitignore file and Copy content of that file
+
+
+Now go to your project and create one .gitignore file into your project and paste content
+
+in it.
+
+
+
+
+******* Github *************
+
+1] Do login to your github account
+
+2] Create new repository on github 
+
+3] Go to Terminal ->  Set your project directory path on terminal
+
+4] Initialize your local directory as git repository
+
+5] Do staging your files  using command git add .   [ Use this if isssue of LF and CRLF isuue is coming git config core.autocrlf false      /    git config core.autocrlf True]
+
+6] See all your files which are in staging state using command git status   
+
+7] Commit your files from your local directory to your git repository
+
+   git commit -m "First Commit"     press enter key
+
+
+   git config --global user.email "yatinhomkar@gmail.com"  press enter key  git config --global user.email "Your Git Email Id"
+
+   git config --global user.name "Yatin"   press enter key
+
+
+  git config --global user.email "Your Email"
+  git config --global user.name "Your Name"
+
+8] Follow Steps given on quick set steps of your git repository
+
+
+
+
+Now we have just pushed our code into git repository now let's create 
+heroku app to deploy our application
+
+Set your application path in cmd
+
+Run following command 
+
+heroku login
+
+Do login
+
+Use following comand 
+
+heroku create mypydjblog
+
+C:\Users\Yatin\Desktop\dj blog>heroku create mypydjblog
+Creating ⬢ mypydjblog... done
+https://mypydjblog.herokuapp.com/ | https://git.heroku.com/mypydjblog.git
+
+
+Visite https://mypydjblog.herokuapp.com/ in your browser
+
+
+or use command
+
+heroku open
+
+We havn't deployed anything else on heroku
+
+Let's push our code to our newly created heroku app
+
+Use command -
+
+git push heroku master -> old and now changed to main
+git push heroku main  [Now master is changed to main]
+
+
+we are getting error to push our code.
+
+To resolve this error -
+
+Add Procfile into root of your code 
+Which contains - web: gunicorn pydjblog.wsgi
+
+Where pydjblog is name of your application
+
+Also add runtime.txt file into root 
+
+Which conatins python-3.7.0
+
+As heroku supports python 3.7.0
+
+i.e. version of python that your project uses
+
+
+commit those changes to git repo
+
+git status
+git add .
+git commit -m "added Procfile and runtime.txt"
+git push
+
+and again run your command 
+
+git push heroku master -> old and now changed to main
+git push heroku main [Now master is changed to main]
+ 
+
+Now this will push codebase from our github repo to heroku app.
+
+Now go into browser and visit url - https://mypydjblog.herokuapp.com/
+
+Now we are getting error -
+
+DisallowedHost at /
+Invalid HTTP_HOST header: 'mypydjblog.herokuapp.com'. 
+You may need to add 'mypydjblog.herokuapp.com' to ALLOWED_HOSTS.
+
+Now to resolve this error -
+
+In django web application we need to specify host that are allowed hosts
+
+And are going to do this change in our settings.py file
+
+Now go to settings.py file and find ALLOWED_HOSTS =[]
+
+and add your mypydjblog.herokuapp.com  as string entry in it
+
+ALLOWED_HOSTS =['mypydjblog.herokuapp.com']
+
+
+git status
+git add .
+git commit -m "updated settings.py with ALLOWED_HOSTS"
+git push
+
+Push those changes to heroku master 
+
+git push heroku main
+
+After successful deployment run command
+
+heroku open
+
+Now we will get an error -
+
+OperationalError at /
+no such table: blog_post
+
+Now we need to use postgress database documentation is given on -
+
+https://devcenter.heroku.com/articles/heroku-postgresql#local-setup
+
+So many times heroku gives us free postgress database configured -
+
+Use command to see it -
+
+heroku addons
+
+We can also see details of our pg database using command -
+
+heroku pg
+
+We now need to create super user to login to our django system
+
+Now we need to do database setting with this prostgress database
+
+To do this we are going to use  django-heroku module that heroku provides us
+
+pip install django-heroku
+
+
+After this go to settings.py of site and add 
+
+import django_heroku
+
+
+Also go to bottom of settings.py and following as last of this file -
+
+django_heroku.settings(locals())  
+
+
+Now update your requirements.txt file using command -
+
+pip freeze > requirements.txt
+
+
+git status
+git add .
+git commit -m "updated settings.py with django_heroku settings"
+git push
+
+git push heroku main
+
+After successful deployment run command
+
+heroku open
+
+Now we will get error -
+
+ProgrammingError at /
+relation "blog_post" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "blog_post"
+
+Now we need to run migrations -
+
+We need to use migrate command -
+
+heroku run python manage.py migrate
+
+
+This will run migration and tables gets created
+
+Now let's create superuser 
+
+heroku run python manage.py createsuperuser
+
+Username:Yatin
+Email Address:yatinhomkar@gmail.com
+Password:testing@12345
+
+Now Run application using command -
+
+heroku run
+
+Done!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
