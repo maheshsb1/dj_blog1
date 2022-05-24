@@ -26,7 +26,7 @@ SECRET_KEY = 'xlsrrj%#r6@c#r7xjuxwaz-=(g!8sk%niicq+te6bg&34ai1u)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mypydjblog.herokuapp.com']
 
 
 # Application definition
